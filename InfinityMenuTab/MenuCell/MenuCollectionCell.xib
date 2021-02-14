@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="17156" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17125"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" translatesAutoresizingMaskIntoConstraints="NO" id="gTV-IL-0wX" customClass="MenuCollectionCell" customModule="InfinityMenuTab" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="215" height="70"/>
+            <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
+                <rect key="frame" x="0.0" y="0.0" width="215" height="70"/>
+                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                <subviews>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="HPR-cI-hL4">
+                        <rect key="frame" x="0.0" y="0.0" width="215" height="70"/>
+                        <subviews>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="b0S-Aq-qHL">
+                                <rect key="frame" x="0.0" y="0.0" width="215" height="70"/>
+                                <connections>
+                                    <action selector="tabItemTouchUpInside:" destination="gTV-IL-0wX" eventType="touchUpInside" id="CNJ-LS-wFe"/>
+                                </connections>
+                            </button>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="NWW-JL-vra">
+                                <rect key="frame" x="0.0" y="10" width="215" height="50"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="NWW-JL-vra" firstAttribute="leading" secondItem="HPR-cI-hL4" secondAttribute="leading" id="0r2-tT-Z2w"/>
+                            <constraint firstItem="NWW-JL-vra" firstAttribute="top" secondItem="HPR-cI-hL4" secondAttribute="top" constant="10" id="5hW-YB-TXt"/>
+                            <constraint firstAttribute="bottom" secondItem="NWW-JL-vra" secondAttribute="bottom" constant="10" id="HKV-e9-bnA"/>
+                            <constraint firstAttribute="bottom" secondItem="b0S-Aq-qHL" secondAttribute="bottom" id="QNp-SO-hwL"/>
+                            <constraint firstItem="b0S-Aq-qHL" firstAttribute="top" secondItem="HPR-cI-hL4" secondAttribute="top" id="WDq-5s-dHV"/>
+                            <constraint firstAttribute="trailing" secondItem="b0S-Aq-qHL" secondAttribute="trailing" id="gEd-m4-oyf"/>
+                            <constraint firstAttribute="trailing" secondItem="NWW-JL-vra" secondAttribute="trailing" id="lLe-kd-zgZ"/>
+                            <constraint firstItem="b0S-Aq-qHL" firstAttribute="leading" secondItem="HPR-cI-hL4" secondAttribute="leading" id="oKE-2X-XYK"/>
+                        </constraints>
+                    </view>
+                </subviews>
+            </view>
+            <constraints>
+                <constraint firstAttribute="trailing" secondItem="HPR-cI-hL4" secondAttribute="trailing" id="Gdj-SI-9Ql"/>
+                <constraint firstAttribute="bottom" secondItem="HPR-cI-hL4" secondAttribute="bottom" id="QzA-XW-V2D"/>
+                <constraint firstItem="HPR-cI-hL4" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" id="dwZ-Ps-BtE"/>
+                <constraint firstItem="HPR-cI-hL4" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" id="x7H-xJ-FWZ"/>
+            </constraints>
+            <size key="customSize" width="215" height="65"/>
+            <connections>
+                <outlet property="baseView" destination="HPR-cI-hL4" id="Kdo-kr-ZQV"/>
+                <outlet property="titleLabel" destination="NWW-JL-vra" id="fmW-Ap-vQY"/>
+            </connections>
+            <point key="canvasLocation" x="-236.95652173913047" y="70.647321428571431"/>
+        </collectionViewCell>
+    </objects>
+    <resources>
+        <systemColor name="systemBackgroundColor">
+            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+    </resources>
+</document>
