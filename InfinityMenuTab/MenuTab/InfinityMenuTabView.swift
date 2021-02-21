@@ -17,8 +17,11 @@ class InfinityMenuTabView: UIView {
     
     private var currentBarViewWidth: CGFloat = 0.0
     
-    
     private var pageTabItemsWidth: CGFloat = 0.0
+    
+    fileprivate var cellForSize: MenuCollectionCell!
+    fileprivate var cachedCellSizes: [IndexPath: CGSize] = [:]
+    
     var pageTabItems: [String] = [] {
         didSet {
             // collectionView.reloadData()
@@ -53,9 +56,7 @@ class InfinityMenuTabView: UIView {
         
         collectionView.scrollsToTop = false
         
-        if let collectionViewLayout = collectionView.collectionViewLayout as? UICollectionViewFlowLayout {
-            collectionViewLayout.estimatedItemSize = UICollectionViewFlowLayout.automaticSize
-        }
+        cellForSize = nib.instantiate(withOwner: nil, options: nil).first as? MenuCollectionCell
     }
     
     private func deselectVisibleCells() {
@@ -88,7 +89,7 @@ extension InfinityMenuTabView: UICollectionViewDelegate {
 extension InfinityMenuTabView: UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return pageTabItems.count * 3 // 表示したい要素数の3倍を返す
+        return pageTabItems.count * 4 // 表示したい要素数の4倍を返す
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -101,7 +102,7 @@ extension InfinityMenuTabView: UICollectionViewDataSource {
     
     private func configureCell(cell: MenuCollectionCell, indexPath: IndexPath) {
         
-        // 無限スクロールのために要素数を3倍用意しているので要素群のindexを計算します
+        // 無限スクロールのために要素数を4倍用意しているので要素群のindexを計算します
         let fixedIndex = indexPath.item % pageTabItems.count
         cell.title = pageTabItems[fixedIndex]
         cell.tabItemButtonTappedAction = { [weak self] in
@@ -117,11 +118,59 @@ extension InfinityMenuTabView: UIScrollViewDelegate {
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         
         if pageTabItemsWidth == 0.0 {
-            pageTabItemsWidth = floor(scrollView.contentSize.width / 3.0) // 表示したい要素"群"のwidthを計算
+            pageTabItemsWidth = floor(scrollView.contentSize.width / 4.0)  // 表示したい要素"群"のwidthを計算
         }
         
-        if (scrollView.contentOffset.x <= 0.0) || (scrollView.contentOffset.x > pageTabItemsWidth * 2.0) { // スクロールした位置がしきい値を超えたら中央に戻す
-            scrollView.contentOffset.x = pageTabItemsWidth
+        // print("デバッグ: \(floor(scrollView.contentSize.width / 4.0))")
+        
+        if (scrollView.contentOffset.x <= pageTabItemsWidth) || (scrollView.contentOffset.x > pageTabItemsWidth * 3.0) { // スクロールした位置がしきい値を超えたら中央に戻す
+            scrollView.contentOffset.x = pageTabItemsWidth * 2
+            print("デバッグ: しきい値を超えた")
         }
+    }
+    
+    func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
+        
+        let centerPoint = CGPoint(x: collectionView.contentOffset.x + collectionView.center.x, y: 0)
+        
+        if let targetPath = collectionView.indexPathForItem(at: centerPoint) {
+            moveCurrentBarView(targetPath, animated: true)
+        }
+    }
+    
+    func scrollViewDidEndScrollingAnimation(_ scrollView: UIScrollView) {
+        let centerPoint = CGPoint(x: collectionView.contentOffset.x + collectionView.center.x, y: 0)
+        
+        if let targetPath = collectionView.indexPathForItem(at: centerPoint) {
+            moveCurrentBarView(targetPath, animated: true)
+        }
+    }
+}
+
+extension InfinityMenuTabView: UICollectionViewDelegateFlowLayout {
+    
+    
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        
+        if let size = cachedCellSizes[indexPath] {
+            return size
+        }
+        
+        configureCell(cell: cellForSize, indexPath: indexPath)
+        
+        let size = cellForSize.sizeThatFits(CGSize(width: collectionView.bounds.width, height: tabViewHeight))
+        
+        cachedCellSizes[indexPath] = size
+        
+        return size
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
+        return 0
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
+        return 0
     }
 }

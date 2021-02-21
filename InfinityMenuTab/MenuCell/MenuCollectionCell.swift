@@ -13,6 +13,7 @@ class MenuCollectionCell: UICollectionViewCell {
     @IBOutlet weak var baseView: UIView!
     
     var tabItemButtonTappedAction: (() -> Void)?
+    
     var isCurrent = false {
         didSet {
             //            currentBarView.isHidden = !isCurrent
@@ -29,6 +30,8 @@ class MenuCollectionCell: UICollectionViewCell {
     var title: String = "" {
         didSet {
             titleLabel.text = title
+            titleLabel.invalidateIntrinsicContentSize()
+            invalidateIntrinsicContentSize()
         }
     }
     
@@ -40,11 +43,18 @@ class MenuCollectionCell: UICollectionViewCell {
         super.awakeFromNib()
     }
     
-    func setHeight(height: CGFloat) {
-        baseView.heightAnchor.constraint(equalToConstant: height).isActive = true
-        titleLabel.sizeToFit()
-        baseView.widthAnchor.constraint(equalToConstant: titleLabel.frame.width).isActive = true
-        
+    override func sizeThatFits(_ size: CGSize) -> CGSize {
+        if title.count == 0 {
+            return CGSize.zero
+        }
+
+        return intrinsicContentSize
+    }
+    
+    override var intrinsicContentSize : CGSize {
+        let width = titleLabel.intrinsicContentSize.width
+        let size = CGSize(width: width, height: 70)
+        return size
     }
 }
 

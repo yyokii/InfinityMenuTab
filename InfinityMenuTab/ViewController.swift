@@ -21,7 +21,7 @@ class ViewController: UIViewController {
         "demo-7",
         "demo-8",
         "demo-9",
-        "demo-10demo-10demo-10",
+        "aaaaaaaaaaaaaa",
     ]
 
     override func viewDidLoad() {
@@ -47,7 +47,16 @@ class ViewController: UIViewController {
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         
-        tabView.moveCurrentBarView(IndexPath(row: pageTabItems.count, section: 0), animated: false)
+        UIView.animate(withDuration: 0) { [weak self] in
+            self?.tabView.collectionView.reloadData()
+        } completion: { [weak self] isFinished in
+            
+            if isFinished {
+                let row = (self?.pageTabItems.count ?? 0) * 2
+                
+                self?.tabView.moveCurrentBarView(IndexPath(row: row, section: 0), animated: false)
+            }
+        }
+
     }
 }
-
