@@ -21,8 +21,8 @@ DerivedData/
 xcuserdata/
 
 ## Project
-*.xcodeproj
-*.xcworkspace
+## *.xcodeproj
+## *.xcworkspace
 
 ## Other
 *.moved-aside
