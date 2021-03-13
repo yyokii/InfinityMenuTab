@@ -52,7 +52,7 @@ class MenuCollectionCell: UICollectionViewCell {
     }
     
     override var intrinsicContentSize : CGSize {
-        let width = titleLabel.intrinsicContentSize.width
+        let width = titleLabel.intrinsicContentSize.width + (20 * 2)
         let size = CGSize(width: width, height: 70)
         return size
     }
